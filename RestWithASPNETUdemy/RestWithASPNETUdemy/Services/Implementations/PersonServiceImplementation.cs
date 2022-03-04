@@ -4,7 +4,7 @@ namespace RestWithASPNETUdemy.Services.Implementations
 {
     public class PersonServiceImplementation : IPersorService
     {
-        private int count;
+        private volatile int count;
 
         public Person Create(Person person)
         {
@@ -31,7 +31,7 @@ namespace RestWithASPNETUdemy.Services.Implementations
         {
             return new Person
             {
-                Id = 1,
+                Id = IncrementAndGet(),
                 FirstName = "Leandro",
                 LastName = "Costa",
                 Address = "Uberlandia - Minas Gerais - Brasil",
@@ -52,7 +52,7 @@ namespace RestWithASPNETUdemy.Services.Implementations
                 FirstName = "Person Name" + i,
                 LastName = "Person Last Name" + i,
                 Address = "Some Address" + i,
-                Gender = "Male" + i
+                Gender = i % 2 == 0 ? "Female" : "Male"
             };
         }
 
