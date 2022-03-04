@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
+using RestWithASPNETUdemy.Models;
+using RestWithASPNETUdemy.Services.Implementations;
 
 namespace RestWithASPNETUdemy.Controllers
 {
@@ -7,21 +9,47 @@ namespace RestWithASPNETUdemy.Controllers
     public class PersonController : ControllerBase
     {
         private readonly ILogger<PersonController> _logger;
+        private readonly IPersorService _persorService;
 
-        public PersonController(ILogger<PersonController> logger)
+        public PersonController(ILogger<PersonController> logger, IPersorService personService)
         {
             _logger = logger;
+            _persorService = personService;
         }
 
-        [HttpGet("sum/{firstNumber}/{secondNumber}")]
-        public IActionResult Sum(string firstNumber, string secondNumber)
+        [HttpGet]
+        public IActionResult Get()
         {
-            if(IsNumeric(firstNumber) && IsNumeric(secondNumber)){
-                var sum = ConvertToDecimal(firstNumber) + ConvertToDecimal(secondNumber);
-                return Ok(sum.ToString());
-            }
+            return Ok(_persorService.FindAll());
+        }
 
-            return BadRequest("Invalid Input");
+        [HttpGet("{id}")]
+        public IActionResult Get(long id)
+        {
+            var person = _persorService.FindById(id);
+
+            if (person == null)
+                return NotFound();
+
+            return Ok(person);
+        }
+
+        [HttpPost]
+        public IActionResult Post([FromBody] Person person)
+        {
+            if (person == null)
+                return BadRequest();
+
+            return Ok(_persorService.Create(person));
+        }
+
+        [HttpPost]
+        public IActionResult Put([FromBody] Person person)
+        {
+            if (person == null)
+                return BadRequest();
+
+            return Ok(_persorService.Update(person));
         }
 
         private bool IsNumeric(string strNumber)
