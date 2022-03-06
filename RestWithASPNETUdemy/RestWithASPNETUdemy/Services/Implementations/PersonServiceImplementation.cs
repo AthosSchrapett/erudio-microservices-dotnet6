@@ -2,7 +2,7 @@
 
 namespace RestWithASPNETUdemy.Services.Implementations
 {
-    public class PersonServiceImplementation : IPersorService
+    public class PersonServiceImplementation : IPersonService
     {
         private volatile int count;
 

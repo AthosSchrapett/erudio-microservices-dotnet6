@@ -5,13 +5,13 @@ using RestWithASPNETUdemy.Services.Implementations;
 namespace RestWithASPNETUdemy.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class PersonController : ControllerBase
     {
         private readonly ILogger<PersonController> _logger;
-        private readonly IPersorService _persorService;
+        private readonly IPersonService _persorService;
 
-        public PersonController(ILogger<PersonController> logger, IPersorService personService)
+        public PersonController(ILogger<PersonController> logger, IPersonService personService)
         {
             _logger = logger;
             _persorService = personService;
@@ -43,7 +43,7 @@ namespace RestWithASPNETUdemy.Controllers
             return Ok(_persorService.Create(person));
         }
 
-        [HttpPost]
+        [HttpPut]
         public IActionResult Put([FromBody] Person person)
         {
             if (person == null)
@@ -51,24 +51,13 @@ namespace RestWithASPNETUdemy.Controllers
 
             return Ok(_persorService.Update(person));
         }
-
-        private bool IsNumeric(string strNumber)
+        
+        [HttpDelete("{id}")]
+        public IActionResult Delete(long id)
         {
-            double number;
-            bool isNumber = double.TryParse(
-                strNumber,
-                System.Globalization.NumberStyles.Any,
-                System.Globalization.NumberFormatInfo.InvariantInfo,
-                out number);
-            return isNumber;
+            _persorService.Delete(id);
+            return NoContent();
         }
 
-        private decimal ConvertToDecimal(string strNumber)
-        {
-            decimal decimalValue;
-            if (decimal.TryParse(strNumber, out decimalValue))
-                return decimalValue;
-            return 0;
-        }
     }
 }
