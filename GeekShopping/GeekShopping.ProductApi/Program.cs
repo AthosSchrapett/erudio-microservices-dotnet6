@@ -1,3 +1,5 @@
+using AutoMapper;
+using GeekShopping.ProductApi.Config;
 using GeekShopping.ProductApi.Model;
 using GeekShopping.ProductApi.Model.Context;
 using Microsoft.EntityFrameworkCore;
@@ -13,6 +15,10 @@ builder.Services.AddSwaggerGen();
 
 var connection = builder.Configuration["PostgresConnection:PostgresConnectionString"];
 builder.Services.AddNpgsql<PostgresContext>(connection);
+
+IMapper mapper = MappingConfig.RegisterMaps().CreateMapper();
+builder.Services.AddSingleton(mapper);
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 var app = builder.Build();
 
