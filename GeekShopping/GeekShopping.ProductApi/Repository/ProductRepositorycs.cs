@@ -15,16 +15,6 @@ namespace GeekShopping.ProductApi.Repository
             _mapper = mapper;
         }
 
-        public Task<ProductVO> Create(ProductVO vo)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> Delete(long id)
-        {
-            throw new NotImplementedException();
-        }
-
         public Task<IEnumerable<ProductVO>> FindAll()
         {
             throw new NotImplementedException();
@@ -35,9 +25,20 @@ namespace GeekShopping.ProductApi.Repository
             throw new NotImplementedException();
         }
 
+        public Task<ProductVO> Create(ProductVO vo)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<ProductVO> Update(ProductVO vo)
         {
             throw new NotImplementedException();
         }
+
+        public Task<bool> Delete(long id)
+        {
+            throw new NotImplementedException();
+        }
+        
     }
 }
