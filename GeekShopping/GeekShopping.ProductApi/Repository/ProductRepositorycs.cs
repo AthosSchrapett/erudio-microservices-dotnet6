@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using GeekShopping.ProductApi.Data.ValueObjects;
+using GeekShopping.ProductApi.Model;
 using GeekShopping.ProductApi.Model.Context;
+using Microsoft.EntityFrameworkCore;
 
 namespace GeekShopping.ProductApi.Repository
 {
@@ -15,14 +17,18 @@ namespace GeekShopping.ProductApi.Repository
             _mapper = mapper;
         }
 
-        public Task<IEnumerable<ProductVO>> FindAll()
+        public async Task<IEnumerable<ProductVO>> FindAll()
         {
-            throw new NotImplementedException();
+            List<Product> products = await _context.Products.ToListAsync();
+            return _mapper.Map<List<ProductVO>>(products);
         }
 
-        public Task<ProductVO> FindById(long id)
+        public async Task<ProductVO> FindById(long id)
         {
-            throw new NotImplementedException();
+            Product product = 
+                await _context.Products.Where(p => p.Id == id)
+                .FirstOrDefaultAsync();
+            return _mapper.Map<ProductVO>(product);
         }
 
         public Task<ProductVO> Create(ProductVO vo)
