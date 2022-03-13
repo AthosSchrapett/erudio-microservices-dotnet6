@@ -6,12 +6,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GeekShopping.ProductApi.Repository
 {
-    public class ProductRepositorycs : IProductRepository
+    public class ProductRepository : IProductRepository
     {
         private readonly PostgresContext _context;
         private IMapper _mapper;
 
-        public ProductRepositorycs(PostgresContext context, IMapper mapper)
+        public ProductRepository(PostgresContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
