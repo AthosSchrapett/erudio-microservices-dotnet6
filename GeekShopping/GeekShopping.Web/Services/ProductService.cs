@@ -1,26 +1,27 @@
 ﻿using GeekShopping.Web.Models;
 using GeekShopping.Web.Services.IServices;
+using GeekShopping.Web.Utils;
 
 namespace GeekShopping.Web.Services
 {
     public class ProductService : IProductService
     {
-        public Task<IEnumerable<ProductModel>> FindAllProducts()
+        private readonly HttpClient _client;
+        public const string BasePath = "api/v1/product";
+
+        public async Task<IEnumerable<ProductModel>> FindAllProducts()
         {
-            throw new NotImplementedException();
+            var response = await _client.GetAsync(BasePath);
+            return await response.HeadContentAs<List<ProductModel>>();
         }
 
-        public Task<ProductModel> FindProductById()
+        public async Task<ProductModel> FindProductById(long id)
         {
-            throw new NotImplementedException();
+            var response = await _client.GetAsync($"{BasePath}/{id}");
+            return await response.HeadContentAs<ProductModel>();
         }
 
         public Task<ProductModel> CreateProduct(ProductModel model)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> DeleteProduct(long id)
         {
             throw new NotImplementedException();
         }
@@ -29,5 +30,10 @@ namespace GeekShopping.Web.Services
         {
             throw new NotImplementedException();
         }
+
+        public Task<bool> DeleteProduct(long id)
+        {
+            throw new NotImplementedException();
+        }        
     }
 }
