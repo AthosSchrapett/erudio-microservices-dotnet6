@@ -10,4 +10,3 @@
         public string ImagemUrl { get; set; }
     }
 }
-}
